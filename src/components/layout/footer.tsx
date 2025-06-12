@@ -5,7 +5,7 @@ import type { FC } from "react";
 
 const SocialLink: FC<{ href: string; icon: React.ReactNode; label: string }> = ({ href, icon, label }) => (
   <Link href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
-    className="text-primary-foreground/80 hover:text-accent transition-colors">
+    className="text-primary-foreground hover:text-accent transition-colors">
     {icon}
   </Link>
 );
