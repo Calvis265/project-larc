@@ -2,7 +2,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent, type ChangeEvent } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,13 +10,13 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PlusCircle, Edit3, Trash2 } from "lucide-react";
+import { PlusCircle, Edit3, Trash2, Camera } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import NextImage from "next/image";
 
 interface Service {
   id: string;
-  src: string;
+  src: string; // Will store Data URL
   alt: string;
 }
 
@@ -39,8 +39,8 @@ const AdminServicesPage: NextPage = () => {
   const [currentService, setCurrentService] = useState<Service | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  const [serviceSrc, setServiceSrc] = useState("");
   const [serviceAlt, setServiceAlt] = useState("");
+  const [serviceImagePreview, setServiceImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -59,7 +59,7 @@ const AdminServicesPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (isMounted && services.length >= 0) { // Save even if empty
+    if (isMounted && services.length >= 0) { 
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(services));
       } catch (error) {
@@ -70,16 +70,37 @@ const AdminServicesPage: NextPage = () => {
 
 
   const resetForm = () => {
-    setServiceSrc("");
     setServiceAlt("");
+    setServiceImagePreview(null);
     setCurrentService(null);
+    const fileInput = document.getElementById("serviceImage") as HTMLInputElement | null;
+    if (fileInput) fileInput.value = "";
+    const editFileInput = document.getElementById("editServiceImage") as HTMLInputElement | null;
+    if (editFileInput) editFileInput.value = "";
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setServiceImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setServiceImagePreview(null);
+    }
   };
 
   const handleAddService = (e: FormEvent) => {
     e.preventDefault();
+    if (!serviceImagePreview) {
+        toast({ title: "Image Required", description: "Please select an image for the service.", variant: "destructive"});
+        return;
+    }
     const newService: Service = {
       id: String(Date.now()), 
-      src: serviceSrc,
+      src: serviceImagePreview,
       alt: serviceAlt,
     };
     setServices(prev => [newService, ...prev]);
@@ -91,7 +112,11 @@ const AdminServicesPage: NextPage = () => {
   const handleEditService = (e: FormEvent) => {
     e.preventDefault();
     if (!currentService) return;
-    const updatedService = { ...currentService, src: serviceSrc, alt: serviceAlt };
+    if (!serviceImagePreview) {
+        toast({ title: "Image Required", description: "Please select an image for the service.", variant: "destructive"});
+        return;
+    }
+    const updatedService = { ...currentService, src: serviceImagePreview, alt: serviceAlt };
     setServices(prev => prev.map(s => s.id === updatedService.id ? updatedService : s));
     toast({ title: "Service Updated", description: `"${updatedService.alt}" has been updated.` });
     resetForm();
@@ -100,7 +125,7 @@ const AdminServicesPage: NextPage = () => {
 
   const openEditDialog = (service: Service) => {
     setCurrentService(service);
-    setServiceSrc(service.src);
+    setServiceImagePreview(service.src);
     setServiceAlt(service.alt);
     setIsEditDialogOpen(true);
   };
@@ -134,8 +159,17 @@ const AdminServicesPage: NextPage = () => {
             </DialogHeader>
             <form onSubmit={handleAddService} className="space-y-4 py-4">
               <div>
-                <Label htmlFor="serviceSrc">Image URL</Label>
-                <Input id="serviceSrc" value={serviceSrc} onChange={e => setServiceSrc(e.target.value)} placeholder="https://placehold.co/1200x600.png" required />
+                <Label htmlFor="serviceImage">Service Image</Label>
+                <Input id="serviceImage" type="file" accept="image/*" onChange={handleImageChange} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90" required />
+                {serviceImagePreview ? (
+                  <div className="mt-2 flex justify-center">
+                    <NextImage src={serviceImagePreview} alt="Service preview" width={150} height={75} className="rounded object-contain" />
+                  </div>
+                ) : (
+                  <div className="mt-2 flex justify-center items-center w-full h-[75px] bg-muted rounded">
+                    <Camera className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                )}
               </div>
               <div>
                 <Label htmlFor="serviceAlt">Alternative Text (Name)</Label>
@@ -160,7 +194,7 @@ const AdminServicesPage: NextPage = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[80px]">Image</TableHead>
+                  <TableHead className="w-[100px]">Image</TableHead>
                   <TableHead>Name (Alt Text)</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -169,7 +203,7 @@ const AdminServicesPage: NextPage = () => {
                 {services.map((service) => (
                   <TableRow key={service.id}>
                     <TableCell>
-                      <NextImage src={service.src} alt={service.alt} width={60} height={30} className="object-cover rounded" data-ai-hint="service landscape" />
+                      <NextImage src={service.src} alt={service.alt} width={80} height={40} className="object-cover rounded" data-ai-hint="service landscape" />
                     </TableCell>
                     <TableCell className="font-medium">{service.alt}</TableCell>
                     <TableCell className="text-right space-x-2">
@@ -218,8 +252,17 @@ const AdminServicesPage: NextPage = () => {
           {currentService && (
             <form onSubmit={handleEditService} className="space-y-4 py-4">
               <div>
-                <Label htmlFor="editServiceSrc">Image URL</Label>
-                <Input id="editServiceSrc" value={serviceSrc} onChange={e => setServiceSrc(e.target.value)} placeholder="https://placehold.co/1200x600.png" required />
+                <Label htmlFor="editServiceImage">Service Image</Label>
+                <Input id="editServiceImage" type="file" accept="image/*" onChange={handleImageChange} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90" />
+                {serviceImagePreview ? (
+                  <div className="mt-2 flex justify-center">
+                    <NextImage src={serviceImagePreview} alt="Service preview" width={150} height={75} className="rounded object-contain" />
+                  </div>
+                ) : (
+                   <div className="mt-2 flex justify-center items-center w-full h-[75px] bg-muted rounded">
+                    <Camera className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                )}
               </div>
               <div>
                 <Label htmlFor="editServiceAlt">Alternative Text (Name)</Label>
@@ -240,9 +283,9 @@ const AdminServicesPage: NextPage = () => {
         </CardHeader>
         <CardContent>
             <p className="text-sm text-muted-foreground">
-                Service data is currently managed using the browser's <strong>localStorage</strong>. This means changes will persist in your current browser but are not shared and will be lost if you clear your browser data.
-                For a production application, you would integrate this with a backend database
-                to store and retrieve service data. The "Services Carousel" on the homepage now also attempts to load data from localStorage.
+                Service data (including images as Data URLs) is currently managed using the browser's <strong>localStorage</strong>. This means changes will persist in your current browser but are not shared and will be lost if you clear your browser data.
+                Image data can be large, and localStorage has limited capacity (typically 5-10MB).
+                For a production application, you would integrate this with a backend database and proper file storage. The "Services Carousel" on the homepage also attempts to load data from localStorage.
             </p>
         </CardContent>
       </Card>
@@ -251,5 +294,3 @@ const AdminServicesPage: NextPage = () => {
 };
 
 export default AdminServicesPage;
-
-    
