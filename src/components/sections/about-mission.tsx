@@ -22,13 +22,13 @@ export const AboutMissionSection: FC = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <InfoPoint icon={<Circle className="w-5 h-5" />}>
-                Larchcode is a social enterprise dedicated to transforming outdoor spaces and empowering urban youth in Nairobi's informal settlements, such as Kibera, Kangemi, and Mathare. We believe that every child and youth deserves access to green, safe, and inspiring environments.
+                Larchcode specializes in professional cabro installation and comprehensive landscaping services. We transform outdoor areas with quality paving and thoughtful landscape design.
               </InfoPoint>
               <InfoPoint icon={<Circle className="w-5 h-5" />}>
-                Our mission is to integrate environmental sustainability with life skills empowerment. By involving youth in hands-on projects like urban gardening, mural painting, and clean-up campaigns, we provide them with practical knowledge and purpose.
+                Our expertise includes meticulous land preparation: from design and tilling to clearing, levelling, and planting. We ensure a perfect foundation for every project.
               </InfoPoint>
               <InfoPoint icon={<Circle className="w-5 h-5" />}>
-                At the heart of our work is the belief that greener communities lead to healthier minds. Through mentorship programs, workshops, and collaborative events, we help young people discover their potential while building stronger, more connected neighborhoods.
+                We are committed to delivering durable and aesthetically pleasing outdoor solutions, enhancing both the value and usability of your space.
               </InfoPoint>
             </CardContent>
           </Card>
@@ -39,30 +39,30 @@ export const AboutMissionSection: FC = () => {
             </CardHeader>
             <CardContent className="space-y-4">
                <InfoPoint icon={<CheckCircle2 className="w-5 h-5" />}>
-                Larchcode is a passionate social enterprise committed to reimagining and revitalizing outdoor spaces in Nairobi’s informal settlements. Our goal is to transform neglected environments into vibrant, functional, and sustainable landscapes while uplifting the lives of young people.
+                Larchcode is your dedicated partner for all cabro and landscaping needs. We handle everything from initial landscape design to the final touches of planting and maintenance.
               </InfoPoint>
               <InfoPoint icon={<CheckCircle2 className="w-5 h-5" />}>
-                By blending creativity, environmental care, and community engagement, we empower youth with practical skills, mentorship, and meaningful work opportunities. Through our landscaping projects, we not only beautify spaces but also inspire hope, pride, and a sense of belonging in the communities we serve.
+                Our services encompass ground tilling, site clearance, precise levelling, expert grass planting, and ongoing maintenance to ensure your landscape thrives.
               </InfoPoint>
-              <Link href="#" className="text-primary hover:underline font-medium">
-                Read More
+              <Link href="#contact" className="text-primary hover:underline font-medium">
+                Learn More About Our Services
               </Link>
             </CardContent>
           </Card>
 
           <Card className="shadow-lg">
             <CardHeader>
-              <CardTitle className="font-headline text-2xl text-primary">Mission Statement</CardTitle>
+              <CardTitle className="font-headline text-2xl text-primary">Our Mission</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <InfoPoint icon={<Circle className="w-5 h-5" />}>
-                Our mission is to empower young men in Nairobi’s informal settlements by providing hands-on training, mentorship, and access to income-generating opportunities. We believe that with the right support, these youth can rise above their challenges and build a future full of purpose and stability.
+                Our mission is to provide top-tier cabro installation and landscaping services, focusing on quality craftsmanship, sustainable practices, and client satisfaction.
               </InfoPoint>
               <InfoPoint icon={<Circle className="w-5 h-5" />}>
-                We are committed to enhancing outdoor spaces through sustainable landscaping practices. Our projects focus on quality and creativity—turning underutilized spaces into vibrant, eco-friendly environments that inspire pride and ownership.
+                We are dedicated to transforming grounds through expert preparation, including designing, tilling, clearing, levelling, and planting, creating functional and beautiful outdoor spaces.
               </InfoPoint>
               <InfoPoint icon={<Circle className="w-5 h-5" />}>
-                By combining modern finishes with environmental preservation, we aim to foster hope and dignity in communities often left behind. Every green space we touch becomes a symbol of renewal, potential, and the power of unity.
+                 We aim to be leaders in creating stunning and enduring landscapes, offering comprehensive maintenance to keep them pristine.
               </InfoPoint>
             </CardContent>
           </Card>

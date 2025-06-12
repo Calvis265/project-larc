@@ -5,22 +5,22 @@ import type { FC } from "react";
 
 const products = [
   {
-    title: "Parcelian Paving",
+    title: "Durable Cabro Driveway",
     imageSrc: "https://placehold.co/400x300.png",
-    description: "Durable and elegant paving solutions.",
-    aiHint: "paving stone"
+    description: "Expertly installed cabro for lasting driveways and parking areas.",
+    aiHint: "cabro driveway"
   },
   {
-    title: "Aspire Paver",
+    title: "Elegant Cabro Walkways",
     imageSrc: "https://placehold.co/400x300.png",
-    description: "Modern designs for stylish pathways.",
-    aiHint: "modern paver"
+    description: "Stylish and practical cabro paths and walkways for gardens and compounds.",
+    aiHint: "cabro walkway"
   },
   {
-    title: "Sand Stone Paver",
+    title: "Custom Paving Solutions",
     imageSrc: "https://placehold.co/400x300.png",
-    description: "Natural look and feel for your outdoors.",
-    aiHint: "sandstone paver"
+    description: "Bespoke paving designs and patterns to suit your unique landscape.",
+    aiHint: "custom paving"
   },
 ];
 
@@ -54,4 +54,3 @@ export const ProductsSection: FC = () => {
     </section>
   );
 };
-

@@ -27,7 +27,7 @@ export const Footer: FC = () => {
           <div>
             <h3 className="text-2xl font-bold mb-4 font-headline text-primary-foreground">Larchcode Hub</h3>
             <p className="text-sm text-primary-foreground/80 mb-6">
-              Transforming spaces and lives with sustainable outdoor solutions.
+              Your experts in professional cabro installation, landscape design, and complete ground preparation services.
             </p>
             <div className="flex space-x-5">
               <SocialLink href="https://twitter.com/yourprofile" icon={<Twitter size={24} />} label="X (Twitter)" />
@@ -81,7 +81,7 @@ export const Footer: FC = () => {
         <hr className="my-8 border-primary-foreground/20" />
 
         <div className="text-center text-xs text-primary-foreground/70">
-          &copy; {new Date().getFullYear()} Larchcode Hub. All Rights Reserved. Designed with passion.
+          &copy; {new Date().getFullYear()} Larchcode Hub. All Rights Reserved. Cabro & Landscaping Experts.
         </div>
       </div>
     </footer>

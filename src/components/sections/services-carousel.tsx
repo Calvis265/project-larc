@@ -7,20 +7,20 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  type CarouselApi, // Import CarouselApi type
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import type { FC } from "react";
-import { useState, useEffect, useCallback } from "react"; // Import hooks
-import { cn } from "@/lib/utils"; // Import cn utility
+import { useState, useEffect, useCallback } from "react";
+import { cn } from "@/lib/utils";
 
 const serviceImages = [
-  { src: "https://placehold.co/1200x600.png", alt: "Landscaping Service 1", hint: "landscaping garden" },
-  { src: "https://placehold.co/1200x600.png", alt: "Urban Gardening Service", hint: "urban gardening" },
-  { src: "https://placehold.co/1200x600.png", alt: "Mural Painting Service", hint: "mural art" },
-  { src: "https://placehold.co/1200x600.png", alt: "Outdoor Revitalization", hint: "outdoor space" },
-  { src: "https://placehold.co/1200x600.png", alt: "Community Cleanup Projects", hint: "community project" },
-  { src: "https://placehold.co/1200x600.png", alt: "Youth Empowerment Programs", hint: "youth program" },
+  { src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation", hint: "cabro paving" },
+  { src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design", hint: "landscape design" },
+  { src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation", hint: "ground tilling" },
+  { src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling", hint: "site clearing" },
+  { src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding", hint: "grass planting" },
+  { src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance", hint: "landscape maintenance" },
 ];
 
 export const ServicesCarousel: FC = () => {
@@ -71,12 +71,12 @@ export const ServicesCarousel: FC = () => {
             opts={{
               align: "start",
               loop: true,
-              duration: 40, // Default is 25, higher value means slower/smoother transition
+              duration: 40, 
             }}
             plugins={[
               Autoplay({
                 delay: 5000,
-                stopOnInteraction: true, // Stop autoplay on interaction (like clicking a dot)
+                stopOnInteraction: true, 
               }),
             ]}
             className="w-full"
@@ -99,7 +99,6 @@ export const ServicesCarousel: FC = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* Previous/Next buttons removed */}
           </Carousel>
 
           {api && (

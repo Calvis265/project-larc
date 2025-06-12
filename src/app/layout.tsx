@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Larchcode Hub',
-  description: 'Transforming spaces and lives with sustainable outdoor solutions.',
+  title: 'Larchcode Hub - Cabro & Landscaping Experts',
+  description: 'Specializing in cabro installation, landscape design, ground preparation, and comprehensive landscaping services.',
 };
 
 export default function RootLayout({

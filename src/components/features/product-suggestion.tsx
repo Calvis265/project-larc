@@ -40,33 +40,33 @@ export const ProductSuggestion: FC = () => {
       <div className="container mx-auto px-4 max-w-2xl">
         <Card className="shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center font-headline text-primary">AI Product Suggestions</CardTitle>
+            <CardTitle className="text-3xl font-bold text-center font-headline text-primary">AI Material Suggestions</CardTitle>
             <CardDescription className="text-center text-foreground/80">
-              Get personalized product recommendations based on your purchase history.
+              Get personalized material recommendations for your landscaping or cabro project.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <Label htmlFor="purchase-history" className="text-primary">Purchase History</Label>
+                <Label htmlFor="purchase-history" className="text-primary">Project Details / Existing Materials</Label>
                 <Textarea
                   id="purchase-history"
                   value={purchaseHistory}
                   onChange={(e) => setPurchaseHistory(e.target.value)}
-                  placeholder="e.g., Red T-Shirt, Blue Jeans, Black Sneakers"
+                  placeholder="e.g., Grey Cabro Blocks, Topsoil, Lawn Grass Seeds, Driveway paving for 50sqm"
                   required
                   className="mt-1 min-h-[100px]"
                 />
-                <p className="text-sm text-muted-foreground mt-1">Enter products separated by commas.</p>
+                <p className="text-sm text-muted-foreground mt-1">Enter materials you have or describe your project.</p>
               </div>
               <div>
-                <Label htmlFor="category" className="text-primary">Product Category</Label>
+                <Label htmlFor="category" className="text-primary">Material/Product Category</Label>
                 <Input
                   id="category"
                   type="text"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  placeholder="e.g., Apparel, Footwear, Accessories"
+                  placeholder="e.g., Paving Materials, Landscaping Supplies, Plants, Tools"
                   required
                   className="mt-1"
                 />
