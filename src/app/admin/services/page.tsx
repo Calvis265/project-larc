@@ -59,7 +59,7 @@ const AdminServicesPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (isMounted && services.length > 0) { 
+    if (isMounted && services.length >= 0) { // Save even if empty
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(services));
       } catch (error) {
@@ -122,7 +122,7 @@ const AdminServicesPage: NextPage = () => {
           <h2 className="text-2xl font-semibold text-foreground">Manage Services</h2>
           <p className="text-muted-foreground">Add, edit, or delete services displayed on your website.</p>
         </div>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+        <Dialog open={isAddDialogOpen} onOpenChange={(isOpen) => { setIsAddDialogOpen(isOpen); if (!isOpen) resetForm(); }}>
           <DialogTrigger asChild>
             <Button onClick={() => { resetForm(); setIsAddDialogOpen(true); }}>
               <PlusCircle className="mr-2 h-4 w-4" /> Add New Service
@@ -169,7 +169,7 @@ const AdminServicesPage: NextPage = () => {
                 {services.map((service) => (
                   <TableRow key={service.id}>
                     <TableCell>
-                      <NextImage src={service.src} alt={service.alt} width={60} height={30} className="object-cover rounded" />
+                      <NextImage src={service.src} alt={service.alt} width={60} height={30} className="object-cover rounded" data-ai-hint="service landscape" />
                     </TableCell>
                     <TableCell className="font-medium">{service.alt}</TableCell>
                     <TableCell className="text-right space-x-2">
@@ -210,7 +210,7 @@ const AdminServicesPage: NextPage = () => {
         </CardContent>
       </Card>
 
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+      <Dialog open={isEditDialogOpen} onOpenChange={(isOpen) => { setIsEditDialogOpen(isOpen); if (!isOpen) resetForm(); }}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
             <DialogTitle>Edit Service</DialogTitle>
@@ -251,3 +251,5 @@ const AdminServicesPage: NextPage = () => {
 };
 
 export default AdminServicesPage;
+
+    
