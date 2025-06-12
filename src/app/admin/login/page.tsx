@@ -41,6 +41,13 @@ export default function AdminLoginPage() {
     setError("");
     setIsLoading(true);
 
+    // For debugging: Log the entered values and expected values
+    console.log("Attempting login with:");
+    console.log("Entered Username:", `"${username}"`);
+    console.log("Expected Username:", `"${ADMIN_USERNAME}"`);
+    console.log("Entered Password:", `"${password}"`);
+    console.log("Expected Password:", `"${ADMIN_PASSWORD}"`);
+
     // Simulate network delay
     setTimeout(() => {
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
