@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { Twitter, Facebook, Linkedin, MessageSquare, Phone, Mail, MapPin } from "lucide-react";
+import { Twitter, Facebook, Linkedin, MessageSquare, Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
 import type { FC } from "react";
 
 const SocialLink: FC<{ href: string; icon: React.ReactNode; label: string }> = ({ href, icon, label }) => (
@@ -41,11 +41,11 @@ export const Footer: FC = () => {
           <div>
             <h5 className="text-lg font-semibold mb-4 font-headline text-primary-foreground/90">Quick Links</h5>
             <ul className="space-y-2">
-              <FooterLink href="#home">Home</FooterLink>
-              <FooterLink href="#about">About Us</FooterLink>
-              <FooterLink href="#services">Services</FooterLink>
-              <FooterLink href="#portfolio">Portfolio</FooterLink>
-              <FooterLink href="#contact">Contact Us</FooterLink>
+              <FooterLink href="/#home">Home</FooterLink>
+              <FooterLink href="/#about">About Us</FooterLink>
+              <FooterLink href="/#services">Services</FooterLink>
+              <FooterLink href="/#portfolio">Portfolio</FooterLink>
+              <FooterLink href="/#contact">Contact Us</FooterLink>
               <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
               <FooterLink href="/terms-of-service">Terms of Service</FooterLink>
             </ul>
@@ -68,11 +68,16 @@ export const Footer: FC = () => {
                 </a>
               </li>
               <li>
-                {/* Placeholder for address, assuming you might add a map later */}
                 <div className="flex items-center space-x-3 text-sm text-primary-foreground/80">
                   <MapPin size={18} />
                   <span>Nairobi, Kenya (Placeholder)</span>
                 </div>
+              </li>
+               <li>
+                <Link href="/admin" className="flex items-center space-x-3 text-sm text-primary-foreground/80 hover:text-accent transition-colors">
+                  <ShieldCheck size={18} />
+                  <span>Admin Panel</span>
+                </Link>
               </li>
             </ul>
           </div>
