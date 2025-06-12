@@ -3,78 +3,102 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'PT Sans', sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --background: 0 0% 100%; /* white */
+    --foreground: 277 51% 42%; /* purple #622C8F */
+
+    --card: 0 0% 100%; /* white */
+    --card-foreground: 277 51% 42%; /* purple */
+
+    --popover: 0 0% 100%; /* white */
+    --popover-foreground: 277 51% 42%; /* purple */
+
+    --primary: 277 51% 42%; /* purple #622C8F */
+    --primary-foreground: 0 0% 100%; /* white */
+
+    --secondary: 0 0% 96.1%; /* light gray */
+    --secondary-foreground: 277 51% 25%; /* dark purple for text on light gray */
+
+    --muted: 0 0% 92%; /* slightly darker gray for muted elements */
+    --muted-foreground: 0 0% 40%; /* darker gray for text */
+
+    --accent: 277 51% 50%; /* Slightly lighter/brighter purple for hover */
+    --accent-foreground: 0 0% 100%; /* white text on accent */
+
+    --destructive: 0 84.2% 60.2%; /* default red */
+    --destructive-foreground: 0 0% 98%; /* white */
+
+    --border: 0 0% 89.8%; /* neutral gray border */
+    --input: 0 0% 89.8%; /* neutral gray input border */
+    --ring: 277 51% 50%; /* purple for focus rings */
+    
+    --chart-1: 277 51% 50%;
+    --chart-2: 277 45% 60%;
+    --chart-3: 277 40% 70%;
+    --chart-4: 277 35% 80%;
+    --chart-5: 277 30% 90%;
+
     --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Sidebar specific theme - aligned with main theme */
+    --sidebar-background: 277 51% 35%; /* slightly darker purple for sidebar */
+    --sidebar-foreground: 0 0% 100%; /* white */
+    --sidebar-primary: 0 0% 100%; /* white (for active/primary elements in sidebar) */
+    --sidebar-primary-foreground: 277 51% 35%; /* purple (text on white active elements) */
+    --sidebar-accent: 277 51% 50%; /* lighter purple for hover */
+    --sidebar-accent-foreground: 0 0% 100%; /* white */
+    --sidebar-border: 277 51% 30%; /* darker purple border */
+    --sidebar-ring: 277 51% 55%; /* brighter purple ring */
   }
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
+    --background: 277 51% 10%; /* dark purple */
+    --foreground: 0 0% 98%; /* almost white */
+
+    --card: 277 51% 12%; /* slightly lighter dark purple */
+    --card-foreground: 0 0% 95%; /* almost white */
+
+    --popover: 277 51% 10%; 
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
+
+    --primary: 277 51% 60%; /* lighter purple for dark mode primary */
+    --primary-foreground: 277 51% 10%; /* dark purple text on light purple primary */
+
+    --secondary: 277 51% 20%; /* medium dark purple */
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 277 51% 15%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+
+    --accent: 277 51% 50%; 
+    --accent-foreground: 0 0% 100%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --border: 277 51% 20%;
+    --input: 277 51% 20%;
+    --ring: 277 51% 65%;
+    
+    --chart-1: 277 60% 60%;
+    --chart-2: 277 55% 70%;
+    --chart-3: 277 50% 80%;
+    --chart-4: 277 45% 85%;
+    --chart-5: 277 40% 90%;
+
+    /* Sidebar dark theme */
+    --sidebar-background: 277 51% 15%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 277 51% 60%;
+    --sidebar-primary-foreground: 277 51% 10%;
+    --sidebar-accent: 277 51% 30%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 277 51% 20%;
+    --sidebar-ring: 277 51% 65%;
   }
 }
 
@@ -85,4 +109,43 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom animation for auth form sliding */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.slide-enter-left {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.slide-enter-active-left {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.slide-exit-left {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-exit-active-left {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 300ms, transform 300ms;
 }
