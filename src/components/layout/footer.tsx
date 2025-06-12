@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { Twitter, Facebook, Linkedin, MessageSquare, Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
+import { Twitter, Facebook, Linkedin, MessageSquare, Phone, Mail, MapPin } from "lucide-react";
 import type { FC } from "react";
 
 const SocialLink: FC<{ href: string; icon: React.ReactNode; label: string }> = ({ href, icon, label }) => (
@@ -72,12 +72,6 @@ export const Footer: FC = () => {
                   <MapPin size={18} />
                   <span>Nairobi, Kenya (Placeholder)</span>
                 </div>
-              </li>
-               <li>
-                <Link href="/admin" className="flex items-center space-x-3 text-sm text-primary-foreground/80 hover:text-accent transition-colors">
-                  <ShieldCheck size={18} />
-                  <span>Admin Panel</span>
-                </Link>
               </li>
             </ul>
           </div>
