@@ -9,22 +9,22 @@ body {
 @layer base {
   :root {
     --background: 0 0% 100%; /* white */
-    --foreground: 277 51% 42%; /* purple #622C8F */
+    --foreground: 240 10% 3.9%; /* very dark gray/near black */
 
     --card: 0 0% 100%; /* white */
-    --card-foreground: 277 51% 42%; /* purple */
+    --card-foreground: 240 10% 3.9%; /* very dark gray/near black */
 
     --popover: 0 0% 100%; /* white */
-    --popover-foreground: 277 51% 42%; /* purple */
+    --popover-foreground: 240 10% 3.9%; /* very dark gray/near black */
 
     --primary: 277 51% 42%; /* purple #622C8F */
     --primary-foreground: 0 0% 100%; /* white */
 
     --secondary: 0 0% 96.1%; /* light gray */
-    --secondary-foreground: 277 51% 25%; /* dark purple for text on light gray */
+    --secondary-foreground: 240 10% 3.9%; /* very dark gray/near black for text on light gray */
 
     --muted: 0 0% 92%; /* slightly darker gray for muted elements */
-    --muted-foreground: 0 0% 40%; /* darker gray for text */
+    --muted-foreground: 240 3.8% 46.1%; /* desaturated gray for muted text */
 
     --accent: 277 51% 50%; /* Slightly lighter/brighter purple for hover */
     --accent-foreground: 0 0% 100%; /* white text on accent */
@@ -149,3 +149,4 @@ body {
   transform: translateX(100%);
   transition: opacity 300ms, transform 300ms;
 }
+
