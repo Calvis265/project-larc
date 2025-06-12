@@ -11,8 +11,7 @@ import { TeamSection } from "@/components/sections/team";
 import { ContactFormSection } from "@/components/sections/contact-form";
 import { Footer } from "@/components/layout/footer";
 import { AuthForm } from "@/components/auth/auth-form";
-import { ProductSuggestion } from "@/components/features/product-suggestion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function HomePage() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -37,7 +36,7 @@ export default function HomePage() {
         <ServicesCarousel />
         <ProductsSection />
         <TeamSection />
-        <ProductSuggestion />
+        {/* <ProductSuggestion /> Removed */}
         <ContactFormSection />
       </main>
       <Footer />

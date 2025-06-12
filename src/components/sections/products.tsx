@@ -8,19 +8,16 @@ const products = [
     title: "Durable Cabro Driveway",
     imageSrc: "https://placehold.co/400x300.png",
     description: "Expertly installed cabro for lasting driveways and parking areas.",
-    aiHint: "cabro driveway"
   },
   {
     title: "Elegant Cabro Walkways",
     imageSrc: "https://placehold.co/400x300.png",
     description: "Stylish and practical cabro paths and walkways for gardens and compounds.",
-    aiHint: "cabro walkway"
   },
   {
     title: "Custom Paving Solutions",
     imageSrc: "https://placehold.co/400x300.png",
     description: "Bespoke paving designs and patterns to suit your unique landscape.",
-    aiHint: "custom paving"
   },
 ];
 
@@ -39,7 +36,6 @@ export const ProductsSection: FC = () => {
                     alt={product.title}
                     fill
                     className="object-cover rounded-t-lg"
-                    data-ai-hint={product.aiHint}
                   />
                 </div>
               </CardHeader>

@@ -29,7 +29,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
         <SidebarHeader className="p-4">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
-              <Image src="https://placehold.co/80x30.png" alt="Larchcode Logo" width={80} height={30} data-ai-hint="company logo small" />
+              <Image src="https://placehold.co/80x30.png" alt="Larchcode Logo" width={80} height={30} />
               <span className="text-lg font-semibold text-sidebar-foreground">Admin Panel</span>
             </Link>
           </div>

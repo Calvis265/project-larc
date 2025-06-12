@@ -7,11 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// Textarea import was removed as it's not used in this specific file
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PlusCircle, Edit3, Trash2 } from "lucide-react"; // ImageIcon removed as NextImage is used
+import { PlusCircle, Edit3, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import NextImage from "next/image";
 
@@ -19,19 +18,17 @@ interface Service {
   id: string;
   src: string;
   alt: string;
-  hint: string;
 }
 
 const LOCAL_STORAGE_KEY = "larchcodeHubServices";
 
-// Initial placeholder data, similar to what's in ServicesCarousel
 const initialServicesData: Service[] = [
-  { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation", hint: "cabro paving" },
-  { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design", hint: "landscape design" },
-  { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation", hint: "ground tilling" },
-  { id: "4", src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling", hint: "site clearing" },
-  { id: "5", src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding", hint: "grass planting" },
-  { id: "6", src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance", hint: "landscape maintenance" },
+  { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation" },
+  { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design" },
+  { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation" },
+  { id: "4", src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling" },
+  { id: "5", src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding" },
+  { id: "6", src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance" },
 ];
 
 const AdminServicesPage: NextPage = () => {
@@ -42,10 +39,8 @@ const AdminServicesPage: NextPage = () => {
   const [currentService, setCurrentService] = useState<Service | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Form states for Add/Edit
   const [serviceSrc, setServiceSrc] = useState("");
   const [serviceAlt, setServiceAlt] = useState("");
-  const [serviceHint, setServiceHint] = useState("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -59,12 +54,12 @@ const AdminServicesPage: NextPage = () => {
       }
     } catch (error) {
       console.error("Failed to load services from localStorage", error);
-      setServices(initialServicesData); // Fallback to initial data
+      setServices(initialServicesData); 
     }
   }, []);
 
   useEffect(() => {
-    if (isMounted && services.length > 0) { // Avoid overwriting on initial empty state if localStorage is empty
+    if (isMounted && services.length > 0) { 
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(services));
       } catch (error) {
@@ -77,7 +72,6 @@ const AdminServicesPage: NextPage = () => {
   const resetForm = () => {
     setServiceSrc("");
     setServiceAlt("");
-    setServiceHint("");
     setCurrentService(null);
   };
 
@@ -87,7 +81,6 @@ const AdminServicesPage: NextPage = () => {
       id: String(Date.now()), 
       src: serviceSrc,
       alt: serviceAlt,
-      hint: serviceHint,
     };
     setServices(prev => [newService, ...prev]);
     toast({ title: "Service Added", description: `"${newService.alt}" has been added.` });
@@ -98,7 +91,7 @@ const AdminServicesPage: NextPage = () => {
   const handleEditService = (e: FormEvent) => {
     e.preventDefault();
     if (!currentService) return;
-    const updatedService = { ...currentService, src: serviceSrc, alt: serviceAlt, hint: serviceHint };
+    const updatedService = { ...currentService, src: serviceSrc, alt: serviceAlt };
     setServices(prev => prev.map(s => s.id === updatedService.id ? updatedService : s));
     toast({ title: "Service Updated", description: `"${updatedService.alt}" has been updated.` });
     resetForm();
@@ -109,7 +102,6 @@ const AdminServicesPage: NextPage = () => {
     setCurrentService(service);
     setServiceSrc(service.src);
     setServiceAlt(service.alt);
-    setServiceHint(service.hint);
     setIsEditDialogOpen(true);
   };
 
@@ -120,7 +112,7 @@ const AdminServicesPage: NextPage = () => {
   };
 
   if (!isMounted) {
-    return null; // Or a loading spinner
+    return null; 
   }
 
   return (
@@ -149,10 +141,6 @@ const AdminServicesPage: NextPage = () => {
                 <Label htmlFor="serviceAlt">Alternative Text (Name)</Label>
                 <Input id="serviceAlt" value={serviceAlt} onChange={e => setServiceAlt(e.target.value)} placeholder="e.g., Professional Cabro Installation" required />
               </div>
-              <div>
-                <Label htmlFor="serviceHint">AI Hint (for image search)</Label>
-                <Input id="serviceHint" value={serviceHint} onChange={e => setServiceHint(e.target.value)} placeholder="e.g., cabro paving" required />
-              </div>
               <DialogFooter>
                 <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
                 <Button type="submit">Add Service</Button>
@@ -174,7 +162,6 @@ const AdminServicesPage: NextPage = () => {
                 <TableRow>
                   <TableHead className="w-[80px]">Image</TableHead>
                   <TableHead>Name (Alt Text)</TableHead>
-                  <TableHead>AI Hint</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -182,10 +169,9 @@ const AdminServicesPage: NextPage = () => {
                 {services.map((service) => (
                   <TableRow key={service.id}>
                     <TableCell>
-                      <NextImage src={service.src} alt={service.alt} width={60} height={30} className="object-cover rounded" data-ai-hint={service.hint} />
+                      <NextImage src={service.src} alt={service.alt} width={60} height={30} className="object-cover rounded" />
                     </TableCell>
                     <TableCell className="font-medium">{service.alt}</TableCell>
-                    <TableCell>{service.hint}</TableCell>
                     <TableCell className="text-right space-x-2">
                       <Button variant="outline" size="sm" onClick={() => openEditDialog(service)}>
                         <Edit3 className="mr-1 h-3 w-3" /> Edit
@@ -224,7 +210,6 @@ const AdminServicesPage: NextPage = () => {
         </CardContent>
       </Card>
 
-      {/* Edit Service Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
@@ -239,10 +224,6 @@ const AdminServicesPage: NextPage = () => {
               <div>
                 <Label htmlFor="editServiceAlt">Alternative Text (Name)</Label>
                 <Input id="editServiceAlt" value={serviceAlt} onChange={e => setServiceAlt(e.target.value)} placeholder="e.g., Professional Cabro Installation" required />
-              </div>
-              <div>
-                <Label htmlFor="editServiceHint">AI Hint (for image search)</Label>
-                <Input id="editServiceHint" value={serviceHint} onChange={e => setServiceHint(e.target.value)} placeholder="e.g., cabro paving" required />
               </div>
               <DialogFooter>
                 <DialogClose asChild><Button type="button" variant="outline" onClick={resetForm}>Cancel</Button></DialogClose>
@@ -260,7 +241,7 @@ const AdminServicesPage: NextPage = () => {
         <CardContent>
             <p className="text-sm text-muted-foreground">
                 Service data is currently managed using the browser's <strong>localStorage</strong>. This means changes will persist in your current browser but are not shared and will be lost if you clear your browser data.
-                For a production application, you would integrate this with a backend database (e.g., Firebase Firestore, Supabase)
+                For a production application, you would integrate this with a backend database
                 to store and retrieve service data. The "Services Carousel" on the homepage now also attempts to load data from localStorage.
             </p>
         </CardContent>
@@ -270,5 +251,3 @@ const AdminServicesPage: NextPage = () => {
 };
 
 export default AdminServicesPage;
-
-    

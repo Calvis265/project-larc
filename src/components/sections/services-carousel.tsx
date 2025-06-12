@@ -15,21 +15,20 @@ import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 interface Service {
-  id: string; // Add id if it's used as key or for other logic, otherwise optional
+  id: string; 
   src: string;
   alt: string;
-  hint: string;
 }
 
 const LOCAL_STORAGE_KEY = "larchcodeHubServices";
 
 const initialServiceImages: Service[] = [
-  { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation", hint: "cabro paving" },
-  { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design", hint: "landscape design" },
-  { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation", hint: "ground tilling" },
-  { id: "4", src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling", hint: "site clearing" },
-  { id: "5", src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding", hint: "grass planting" },
-  { id: "6", src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance", hint: "landscape maintenance" },
+  { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation" },
+  { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design" },
+  { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation" },
+  { id: "4", src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling" },
+  { id: "5", src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding" },
+  { id: "6", src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance" },
 ];
 
 export const ServicesCarousel: FC = () => {
@@ -48,14 +47,14 @@ export const ServicesCarousel: FC = () => {
         if (parsedServices.length > 0) {
           setServiceImages(parsedServices);
         } else {
-           setServiceImages(initialServiceImages); // Fallback if localStorage is empty array
+           setServiceImages(initialServiceImages); 
         }
       } else {
-        setServiceImages(initialServiceImages); // Fallback if key doesn't exist
+        setServiceImages(initialServiceImages); 
       }
     } catch (error) {
       console.error("Failed to load services from localStorage for carousel", error);
-      setServiceImages(initialServiceImages); // Fallback on error
+      setServiceImages(initialServiceImages); 
     }
   }, []);
 
@@ -89,7 +88,6 @@ export const ServicesCarousel: FC = () => {
   const scrollTo = useCallback(
     (index: number) => {
       api?.scrollTo(index);
-      // Optionally stop autoplay on manual interaction
       const autoplayPlugin = api?.plugins()?.autoplay as any;
       if (autoplayPlugin) {
         autoplayPlugin.stop();
@@ -99,7 +97,7 @@ export const ServicesCarousel: FC = () => {
   );
 
   if (!isMounted) {
-    return ( // Basic loading state
+    return ( 
       <section id="services" className="py-16 bg-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-12 font-headline text-primary">Our Services</h2>
@@ -135,14 +133,14 @@ export const ServicesCarousel: FC = () => {
             plugins={[
               Autoplay({
                 delay: 5000,
-                stopOnInteraction: false, // Set to true if you want manual scroll to permanently stop autoplay
+                stopOnInteraction: false, 
               }),
             ]}
             className="w-full"
           >
             <CarouselContent>
               {serviceImages.map((image, index) => (
-                <CarouselItem key={image.id || index}> {/* Use image.id if available and unique */}
+                <CarouselItem key={image.id || index}> 
                   <Card className="overflow-hidden shadow-lg">
                     <CardContent className="flex aspect-[2/1] items-center justify-center p-0">
                       <Image
@@ -151,8 +149,7 @@ export const ServicesCarousel: FC = () => {
                         width={1200}
                         height={600}
                         className="object-cover w-full h-full"
-                        data-ai-hint={image.hint}
-                        priority={index === 0} // Prioritize loading the first image
+                        priority={index === 0} 
                       />
                     </CardContent>
                   </Card>
@@ -183,5 +180,3 @@ export const ServicesCarousel: FC = () => {
     </section>
   );
 };
-
-    
