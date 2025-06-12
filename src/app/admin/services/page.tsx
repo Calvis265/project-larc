@@ -7,13 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+// Textarea import was removed as it's not used in this specific file
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PlusCircle, Edit3, Trash2, Image as ImageIcon } from "lucide-react";
+import { PlusCircle, Edit3, Trash2 } from "lucide-react"; // ImageIcon removed as NextImage is used
 import { useToast } from "@/hooks/use-toast";
-import NextImage from "next/image"; // Renamed to avoid conflict with Lucide's Image
+import NextImage from "next/image";
 
 interface Service {
   id: string;
@@ -22,8 +22,10 @@ interface Service {
   hint: string;
 }
 
+const LOCAL_STORAGE_KEY = "larchcodeHubServices";
+
 // Initial placeholder data, similar to what's in ServicesCarousel
-const initialServices: Service[] = [
+const initialServicesData: Service[] = [
   { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation", hint: "cabro paving" },
   { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design", hint: "landscape design" },
   { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation", hint: "ground tilling" },
@@ -34,15 +36,43 @@ const initialServices: Service[] = [
 
 const AdminServicesPage: NextPage = () => {
   const { toast } = useToast();
-  const [services, setServices] = useState<Service[]>(initialServices);
+  const [services, setServices] = useState<Service[]>([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [currentService, setCurrentService] = useState<Service | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Form states for Add/Edit
   const [serviceSrc, setServiceSrc] = useState("");
   const [serviceAlt, setServiceAlt] = useState("");
   const [serviceHint, setServiceHint] = useState("");
+
+  useEffect(() => {
+    setIsMounted(true);
+    try {
+      const storedServices = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedServices) {
+        setServices(JSON.parse(storedServices));
+      } else {
+        setServices(initialServicesData);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialServicesData));
+      }
+    } catch (error) {
+      console.error("Failed to load services from localStorage", error);
+      setServices(initialServicesData); // Fallback to initial data
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && services.length > 0) { // Avoid overwriting on initial empty state if localStorage is empty
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(services));
+      } catch (error) {
+        console.error("Failed to save services to localStorage", error);
+      }
+    }
+  }, [services, isMounted]);
+
 
   const resetForm = () => {
     setServiceSrc("");
@@ -54,13 +84,13 @@ const AdminServicesPage: NextPage = () => {
   const handleAddService = (e: FormEvent) => {
     e.preventDefault();
     const newService: Service = {
-      id: String(Date.now()), // simple unique ID
+      id: String(Date.now()), 
       src: serviceSrc,
       alt: serviceAlt,
       hint: serviceHint,
     };
     setServices(prev => [newService, ...prev]);
-    toast({ title: "Service Added", description: `"${newService.alt}" has been added (simulated).` });
+    toast({ title: "Service Added", description: `"${newService.alt}" has been added.` });
     resetForm();
     setIsAddDialogOpen(false);
   };
@@ -70,7 +100,7 @@ const AdminServicesPage: NextPage = () => {
     if (!currentService) return;
     const updatedService = { ...currentService, src: serviceSrc, alt: serviceAlt, hint: serviceHint };
     setServices(prev => prev.map(s => s.id === updatedService.id ? updatedService : s));
-    toast({ title: "Service Updated", description: `"${updatedService.alt}" has been updated (simulated).` });
+    toast({ title: "Service Updated", description: `"${updatedService.alt}" has been updated.` });
     resetForm();
     setIsEditDialogOpen(false);
   };
@@ -84,9 +114,14 @@ const AdminServicesPage: NextPage = () => {
   };
 
   const handleDeleteService = (serviceId: string) => {
+    const serviceToDelete = services.find(s => s.id === serviceId);
     setServices(prev => prev.filter(s => s.id !== serviceId));
-    toast({ title: "Service Deleted", description: "Service has been deleted (simulated).", variant: "destructive" });
+    toast({ title: "Service Deleted", description: `Service "${serviceToDelete?.alt || ''}" has been deleted.`, variant: "destructive" });
   };
+
+  if (!isMounted) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <div className="space-y-6">
@@ -130,7 +165,7 @@ const AdminServicesPage: NextPage = () => {
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle>All Services</CardTitle>
-          <CardDescription>These services are displayed in the services carousel on your homepage.</CardDescription>
+          <CardDescription>These services are displayed in the services carousel on your homepage. Data is currently stored in browser localStorage for prototyping.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -220,13 +255,13 @@ const AdminServicesPage: NextPage = () => {
 
       <Card className="mt-6">
         <CardHeader>
-            <CardTitle>Developer Note</CardTitle>
+            <CardTitle>Developer Note (LocalStorage Prototyping)</CardTitle>
         </CardHeader>
         <CardContent>
             <p className="text-sm text-muted-foreground">
-                Currently, service data is managed in this component's state and is not persisted.
+                Service data is currently managed using the browser's <strong>localStorage</strong>. This means changes will persist in your current browser but are not shared and will be lost if you clear your browser data.
                 For a production application, you would integrate this with a backend database (e.g., Firebase Firestore, Supabase)
-                to store and retrieve service data. The "Services Carousel" on the homepage would then fetch data from this source.
+                to store and retrieve service data. The "Services Carousel" on the homepage now also attempts to load data from localStorage.
             </p>
         </CardContent>
       </Card>
@@ -235,3 +270,5 @@ const AdminServicesPage: NextPage = () => {
 };
 
 export default AdminServicesPage;
+
+    

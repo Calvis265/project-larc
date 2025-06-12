@@ -14,22 +14,54 @@ import type { FC } from "react";
 import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
-const serviceImages = [
-  { src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation", hint: "cabro paving" },
-  { src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design", hint: "landscape design" },
-  { src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation", hint: "ground tilling" },
-  { src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling", hint: "site clearing" },
-  { src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding", hint: "grass planting" },
-  { src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance", hint: "landscape maintenance" },
+interface Service {
+  id: string; // Add id if it's used as key or for other logic, otherwise optional
+  src: string;
+  alt: string;
+  hint: string;
+}
+
+const LOCAL_STORAGE_KEY = "larchcodeHubServices";
+
+const initialServiceImages: Service[] = [
+  { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation", hint: "cabro paving" },
+  { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design", hint: "landscape design" },
+  { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation", hint: "ground tilling" },
+  { id: "4", src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling", hint: "site clearing" },
+  { id: "5", src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding", hint: "grass planting" },
+  { id: "6", src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance", hint: "landscape maintenance" },
 ];
 
 export const ServicesCarousel: FC = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+  const [serviceImages, setServiceImages] = useState<Service[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!api) {
+    setIsMounted(true);
+    try {
+      const storedServices = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedServices) {
+        const parsedServices: Service[] = JSON.parse(storedServices);
+        if (parsedServices.length > 0) {
+          setServiceImages(parsedServices);
+        } else {
+           setServiceImages(initialServiceImages); // Fallback if localStorage is empty array
+        }
+      } else {
+        setServiceImages(initialServiceImages); // Fallback if key doesn't exist
+      }
+    } catch (error) {
+      console.error("Failed to load services from localStorage for carousel", error);
+      setServiceImages(initialServiceImages); // Fallback on error
+    }
+  }, []);
+
+
+  useEffect(() => {
+    if (!api || serviceImages.length === 0) {
       return;
     }
 
@@ -52,14 +84,41 @@ export const ServicesCarousel: FC = () => {
       api.off("select", onSelectHandler);
       api.off("reInit", onReInitHandler);
     };
-  }, [api]);
+  }, [api, serviceImages]);
 
   const scrollTo = useCallback(
     (index: number) => {
       api?.scrollTo(index);
+      // Optionally stop autoplay on manual interaction
+      const autoplayPlugin = api?.plugins()?.autoplay as any;
+      if (autoplayPlugin) {
+        autoplayPlugin.stop();
+      }
     },
     [api]
   );
+
+  if (!isMounted) {
+    return ( // Basic loading state
+      <section id="services" className="py-16 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-12 font-headline text-primary">Our Services</h2>
+          <p>Loading services...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (serviceImages.length === 0) {
+    return (
+      <section id="services" className="py-16 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-12 font-headline text-primary">Our Services</h2>
+          <p className="text-muted-foreground">No services are currently available. Please check back later or add services in the admin panel.</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="services" className="py-16 bg-background">
@@ -76,14 +135,14 @@ export const ServicesCarousel: FC = () => {
             plugins={[
               Autoplay({
                 delay: 5000,
-                stopOnInteraction: true, 
+                stopOnInteraction: false, // Set to true if you want manual scroll to permanently stop autoplay
               }),
             ]}
             className="w-full"
           >
             <CarouselContent>
               {serviceImages.map((image, index) => (
-                <CarouselItem key={index}>
+                <CarouselItem key={image.id || index}> {/* Use image.id if available and unique */}
                   <Card className="overflow-hidden shadow-lg">
                     <CardContent className="flex aspect-[2/1] items-center justify-center p-0">
                       <Image
@@ -93,6 +152,7 @@ export const ServicesCarousel: FC = () => {
                         height={600}
                         className="object-cover w-full h-full"
                         data-ai-hint={image.hint}
+                        priority={index === 0} // Prioritize loading the first image
                       />
                     </CardContent>
                   </Card>
@@ -101,7 +161,7 @@ export const ServicesCarousel: FC = () => {
             </CarouselContent>
           </Carousel>
 
-          {api && (
+          {api && count > 0 && (
             <div className="flex justify-center space-x-2 pt-6">
               {Array.from({ length: count }).map((_, index) => (
                 <button
@@ -123,3 +183,5 @@ export const ServicesCarousel: FC = () => {
     </section>
   );
 };
+
+    
