@@ -13,23 +13,20 @@ import { Footer } from "@/components/layout/footer";
 import { AuthForm } from "@/components/auth/auth-form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
+type AuthMode = "login" | "register" | "forgotPassword";
+
 export default function HomePage() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<"login" | "register">("login");
+  const [authMode, setAuthMode] = useState<AuthMode>("login");
 
-  const openLoginModal = () => {
-    setAuthMode("login");
-    setIsAuthModalOpen(true);
-  };
-
-  const openSignUpModal = () => {
-    setAuthMode("register");
+  const openAuthModal = (mode: AuthMode) => {
+    setAuthMode(mode);
     setIsAuthModalOpen(true);
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header onLoginClick={openLoginModal} onSignUpClick={openSignUpModal} />
+      <Header onLoginClick={() => openAuthModal("login")} onSignUpClick={() => openAuthModal("register")} />
       <main className="flex-grow">
         <HeroSection />
         <AboutMissionSection />
@@ -44,13 +41,20 @@ export default function HomePage() {
         <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden">
           <DialogHeader className="sr-only">
             <DialogTitle>
-              {authMode === "login" ? "Login" : "Create Account"}
+              {authMode === "login" ? "Login" 
+                : authMode === "register" ? "Create Account" 
+                : "Forgot Password"}
             </DialogTitle>
             <DialogDescription>
-              {authMode === "login" ? "Access your Larchcode Hub account." : "Join Larchcode Hub today."}
+              {authMode === "login" ? "Access your Larchcode Hub account." 
+                : authMode === "register" ? "Join Larchcode Hub today."
+                : "Request a password reset for your Larchcode Hub account."}
             </DialogDescription>
           </DialogHeader>
-          <AuthForm initialMode={authMode} />
+          <AuthForm 
+            initialMode={authMode} 
+            onModeChange={(newMode) => setAuthMode(newMode)} 
+          />
         </DialogContent>
       </Dialog>
     </div>
