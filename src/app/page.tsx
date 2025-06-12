@@ -11,7 +11,7 @@ import { TeamSection } from "@/components/sections/team";
 import { ContactFormSection } from "@/components/sections/contact-form";
 import { Footer } from "@/components/layout/footer";
 import { AuthForm } from "@/components/auth/auth-form";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export default function HomePage() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -36,19 +36,20 @@ export default function HomePage() {
         <ServicesCarousel />
         <ProductsSection />
         <TeamSection />
-        {/* <ProductSuggestion /> Removed */}
         <ContactFormSection />
       </main>
       <Footer />
 
       <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
         <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden">
-          {/* DialogHeader is part of AuthForm now */}
-          {/* <DialogHeader className="p-6 pb-0">
-            <DialogTitle className="font-headline text-2xl text-primary">
-              {authMode === "login" ? "Login" : "Sign Up"}
+          <DialogHeader className="sr-only">
+            <DialogTitle>
+              {authMode === "login" ? "Login" : "Create Account"}
             </DialogTitle>
-          </DialogHeader> */}
+            <DialogDescription>
+              {authMode === "login" ? "Access your Larchcode Hub account." : "Join Larchcode Hub today."}
+            </DialogDescription>
+          </DialogHeader>
           <AuthForm initialMode={authMode} />
         </DialogContent>
       </Dialog>
