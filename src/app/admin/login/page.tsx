@@ -52,8 +52,7 @@ export default function AdminLoginPage() {
           localStorage.setItem("isAdminAuthenticated", "true");
       }
       toast({ title: "Login Successful", description: "Redirecting to admin panel..." });
-      router.push("/admin");
-      // No need to setIsLoading(false) here as we are redirecting
+      router.replace("/admin"); // Changed from router.push to router.replace
     } else {
       setError("Invalid username or password.");
       toast({ title: "Login Failed", description: "Invalid username or password.", variant: "destructive" });
