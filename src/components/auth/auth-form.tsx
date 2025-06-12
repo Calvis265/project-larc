@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, type FC, type FormEvent } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -74,11 +75,18 @@ export const AuthForm: FC<AuthFormProps> = ({ initialMode = "login" }) => {
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">Login</Button>
             </form>
           </CardContent>
-          <CardFooter className="text-sm">
+          <CardFooter className="text-sm flex flex-col items-start space-y-2">
             <p>Don't have an account?{" "}
               <Button variant="link" onClick={switchToRegister} className="p-0 h-auto text-accent">
                 Sign Up
               </Button>
+            </p>
+            <p>
+              <Link href="/admin" passHref>
+                <Button variant="link" className="p-0 h-auto text-accent">
+                  Admin Panel
+                </Button>
+              </Link>
             </p>
           </CardFooter>
         </Card>
@@ -117,11 +125,18 @@ export const AuthForm: FC<AuthFormProps> = ({ initialMode = "login" }) => {
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">Create Account</Button>
             </form>
           </CardContent>
-          <CardFooter className="text-sm">
+          <CardFooter className="text-sm flex flex-col items-start space-y-2">
             <p>Already have an account?{" "}
               <Button variant="link" onClick={switchToLogin} className="p-0 h-auto text-accent">
                 Login
               </Button>
+            </p>
+            <p>
+              <Link href="/admin" passHref>
+                <Button variant="link" className="p-0 h-auto text-accent">
+                  Admin Panel
+                </Button>
+              </Link>
             </p>
           </CardFooter>
         </Card>
