@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Circle1, Circle2, Circle3, CheckCircle2 } from "lucide-react";
+import { Circle, CheckCircle2 } from "lucide-react";
 import type { FC } from "react";
 import Link from "next/link";
 
@@ -21,13 +21,13 @@ export const AboutMissionSection: FC = () => {
               <CardTitle className="font-headline text-2xl text-primary">Who We Are</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <InfoPoint icon={<Circle1 className="w-5 h-5" />}>
+              <InfoPoint icon={<Circle className="w-5 h-5" />}>
                 Larchcode is a social enterprise dedicated to transforming outdoor spaces and empowering urban youth in Nairobi's informal settlements, such as Kibera, Kangemi, and Mathare. We believe that every child and youth deserves access to green, safe, and inspiring environments.
               </InfoPoint>
-              <InfoPoint icon={<Circle2 className="w-5 h-5" />}>
+              <InfoPoint icon={<Circle className="w-5 h-5" />}>
                 Our mission is to integrate environmental sustainability with life skills empowerment. By involving youth in hands-on projects like urban gardening, mural painting, and clean-up campaigns, we provide them with practical knowledge and purpose.
               </InfoPoint>
-              <InfoPoint icon={<Circle3 className="w-5 h-5" />}>
+              <InfoPoint icon={<Circle className="w-5 h-5" />}>
                 At the heart of our work is the belief that greener communities lead to healthier minds. Through mentorship programs, workshops, and collaborative events, we help young people discover their potential while building stronger, more connected neighborhoods.
               </InfoPoint>
             </CardContent>
@@ -55,13 +55,13 @@ export const AboutMissionSection: FC = () => {
               <CardTitle className="font-headline text-2xl text-primary">Mission Statement</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <InfoPoint icon={<Circle1 className="w-5 h-5" />}>
+              <InfoPoint icon={<Circle className="w-5 h-5" />}>
                 Our mission is to empower young men in Nairobi’s informal settlements by providing hands-on training, mentorship, and access to income-generating opportunities. We believe that with the right support, these youth can rise above their challenges and build a future full of purpose and stability.
               </InfoPoint>
-              <InfoPoint icon={<Circle2 className="w-5 h-5" />}>
+              <InfoPoint icon={<Circle className="w-5 h-5" />}>
                 We are committed to enhancing outdoor spaces through sustainable landscaping practices. Our projects focus on quality and creativity—turning underutilized spaces into vibrant, eco-friendly environments that inspire pride and ownership.
               </InfoPoint>
-              <InfoPoint icon={<Circle3 className="w-5 h-5" />}>
+              <InfoPoint icon={<Circle className="w-5 h-5" />}>
                 By combining modern finishes with environmental preservation, we aim to foster hope and dignity in communities often left behind. Every green space we touch becomes a symbol of renewal, potential, and the power of unity.
               </InfoPoint>
             </CardContent>
