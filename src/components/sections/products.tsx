@@ -31,7 +31,7 @@ export const ProductsSection: FC = () => {
         <h2 className="text-3xl font-bold text-center mb-12 font-headline text-primary">Our Portfolio</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {products.map((product, index) => (
-            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
               <CardHeader>
                 <div className="aspect-video relative w-full">
                   <Image
@@ -54,3 +54,4 @@ export const ProductsSection: FC = () => {
     </section>
   );
 };
+
