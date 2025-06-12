@@ -36,9 +36,9 @@ export const ProductSuggestion: FC = () => {
   };
 
   return (
-    <section id="ai-suggestions" className="py-16 bg-secondary">
+    <section id="ai-suggestions" className="py-16 bg-muted">
       <div className="container mx-auto px-4 max-w-2xl">
-        <Card className="shadow-xl">
+        <Card className="shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center font-headline text-primary">AI Product Suggestions</CardTitle>
             <CardDescription className="text-center text-foreground/80">

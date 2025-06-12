@@ -29,9 +29,9 @@ export const ContactFormSection: FC = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-secondary">
+    <section id="contact" className="py-16 bg-background">
       <div className="container mx-auto px-4 max-w-2xl">
-        <Card className="shadow-xl">
+        <Card className="shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center font-headline text-primary">Contact Us</CardTitle>
           </CardHeader>
