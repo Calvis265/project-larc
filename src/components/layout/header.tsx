@@ -46,7 +46,7 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
       <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
         <Link href="/" passHref>
           <div className="flex items-center space-x-2 cursor-pointer">
-            <Image src="https://placehold.co/100x40.png" alt="Larchcode Logo" width={100} height={40} />
+            <Image src="https://placehold.co/100x40.png" alt="Larchcode Logo" width={100} height={40} data-ai-hint="logo simple" />
             <h1 className="text-2xl font-bold font-headline">Larchcode Hub</h1>
           </div>
         </Link>

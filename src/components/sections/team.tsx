@@ -10,6 +10,7 @@ const teamMembers = [
     description: "Experienced Finance & Operations Leader | Accredited Mediator | Strategic Management & Entrepreneurship Enthusiast | Stakeholder Engagement | Currently Improving Spanish Skills at UPV Valencia, Spain",
     imageSrc: "https://placehold.co/150x150.png",
     stars: "🌟🌟🌟🌟",
+    aiHint: "female leader"
   },
   {
     name: "Calvis Onyango",
@@ -17,6 +18,7 @@ const teamMembers = [
     description: "Experienced Full stack Software Engineer | Currently Improving Tech Skills at Moringa school, Kenya",
     imageSrc: "https://placehold.co/150x150.png",
     stars: "🌟🌟🌟🌟",
+    aiHint: "male support"
   },
   {
     name: "Merceline Onyango",
@@ -24,6 +26,7 @@ const teamMembers = [
     description: "Experienced Civil Engineer | Strategic Management & Entrepreneurship Enthusiast | Currently Improving Construction Skills at Machakos University, Kenya",
     imageSrc: "https://placehold.co/150x150.png",
     stars: "🌟🌟🌟🌟",
+    aiHint: "female engineer"
   },
   {
     name: "Michelle Troksa",
@@ -31,6 +34,7 @@ const teamMembers = [
     description: "Experienced Communications Program Manager | Strategic Management & Entrepreneurship Enthusiast | Stakeholder Engagement | Currently working at ,United States",
     imageSrc: "https://placehold.co/150x150.png",
     stars: "🌟🌟🌟🌟",
+    aiHint: "female manager"
   },
 ];
 
@@ -52,6 +56,7 @@ export const TeamSection: FC = () => {
                     alt={member.name}
                     fill
                     className="object-cover"
+                    data-ai-hint={member.aiHint}
                   />
                 </div>
                 <CardTitle className="font-headline text-xl text-primary">{member.name}</CardTitle>
