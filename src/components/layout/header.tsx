@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -15,9 +15,10 @@ interface HeaderProps {
   onSignUpClick: () => void;
 }
 
-const NavLink: FC<{ href: string; children: React.ReactNode; onClick?: () => void }> = ({ href, children, onClick }) => (
+const NavLink: FC<{ href: string; children: React.ReactNode; onClick?: () => void, icon?: React.ReactNode }> = ({ href, children, onClick, icon }) => (
   <Link href={href} passHref>
     <Button variant="ghost" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground font-headline" onClick={onClick}>
+      {icon && <span className="mr-2">{icon}</span>}
       {children}
     </Button>
   </Link>
@@ -34,6 +35,7 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     { label: "Portfolio", href: "#portfolio" },
     { label: "Team", href: "#team" },
     { label: "Contact", href: "#contact" },
+    { label: "Admin Panel", href: "/admin", icon: <ShieldCheck size={16} /> },
   ];
 
   const handleNavLinkClick = () => {
@@ -45,21 +47,21 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
       <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
         <Link href="/" passHref>
           <div className="flex items-center space-x-2 cursor-pointer">
-            <Image src="https://placehold.co/100x40.png" alt="Larchcode Logo" width={100} height={40} />
+            <Image src="https://placehold.co/100x40.png" alt="Larchcode Logo" width={100} height={40} data-ai-hint="logo abstract" />
             <h1 className="text-2xl font-bold font-headline">Larchcode Hub</h1>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-2">
+        <nav className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => (
-            <NavLink key={item.label} href={item.href}>{item.label}</NavLink>
+            <NavLink key={item.label} href={item.href} icon={item.icon}>{item.label}</NavLink>
           ))}
-          <Button variant="secondary" onClick={onLoginClick} className="font-headline">Login</Button>
+          <Button variant="secondary" onClick={onLoginClick} className="font-headline ml-2">Login</Button>
           <Button onClick={onSignUpClick} className="font-headline bg-accent hover:bg-accent/90 text-accent-foreground">Sign Up</Button>
         </nav>
         
-        <div className="hidden md:flex items-center space-x-2">
+        <div className="hidden lg:flex items-center space-x-2">
           <Input type="search" placeholder="Search" className="w-48 bg-background text-foreground placeholder-muted-foreground" />
           <Button type="submit" variant="secondary" size="icon">
             <Search className="h-5 w-5" />
@@ -68,7 +70,7 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
 
 
         {/* Mobile Navigation Trigger */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center">
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -76,9 +78,9 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[250px] sm:w-[300px] bg-primary text-primary-foreground p-6">
-              <nav className="flex flex-col space-y-4 mt-6">
+              <nav className="flex flex-col space-y-3 mt-6">
                 {navItems.map((item) => (
-                  <NavLink key={item.label} href={item.href} onClick={handleNavLinkClick}>{item.label}</NavLink>
+                  <NavLink key={item.label} href={item.href} onClick={handleNavLinkClick} icon={item.icon}>{item.label}</NavLink>
                 ))}
                 <Button variant="secondary" onClick={() => { onLoginClick(); handleNavLinkClick(); }} className="w-full font-headline">Login</Button>
                 <Button onClick={() => { onSignUpClick(); handleNavLinkClick(); }} className="w-full font-headline bg-accent hover:bg-accent/90 text-accent-foreground">Sign Up</Button>
