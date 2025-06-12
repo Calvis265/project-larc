@@ -15,7 +15,7 @@ import {
   SidebarFooter,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { Home, Users, Settings, Building2 } from "lucide-react";
+import { Home, Users, Settings, Building2, ListChecks, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 
 interface AdminLayoutProps {
@@ -53,19 +53,26 @@ const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Site Settings">
-                <Link href="/admin/settings">
-                  <Settings />
-                  <span>Site Settings</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            {/* Add more admin links as needed for different roles */}
-             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Departments">
                 <Link href="/admin/departments">
                   <Building2 />
                   <span>Departments</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Manage Services">
+                <Link href="/admin/services">
+                  <ImageIcon />
+                  <span>Manage Services</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Site Settings">
+                <Link href="/admin/settings">
+                  <Settings />
+                  <span>Site Settings</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
