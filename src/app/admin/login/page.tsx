@@ -12,8 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
 
-const ADMIN_USERNAME = "calvis.onyango.caltech";
-const ADMIN_PASSWORD = "@calvis24";
+const ADMIN_USERNAME = "calvisonyango.admin";
+const ADMIN_PASSWORD = "@Calvis24";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -92,7 +92,7 @@ export default function AdminLoginPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="calvis.onyango.caltech"
+                placeholder="calvisonyango.admin"
                 required
                 disabled={isLoading}
               />
