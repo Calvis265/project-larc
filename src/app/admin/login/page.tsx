@@ -48,15 +48,13 @@ export default function AdminLoginPage() {
     console.log("Expected Password:", `"${ADMIN_PASSWORD}"`);
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      setTimeout(() => {
-        if (typeof window !== "undefined") {
-            localStorage.setItem("isAdminAuthenticated", "true");
-        }
-        toast({ title: "Login Successful", description: "Redirecting to admin panel..." });
-        router.replace("/admin");
-        // setIsLoading(false) is not strictly necessary here as the component will unmount
-        // but if there was any logic after router.replace it would be.
-      }, 500); // 0.5 second delay
+      // Removed setTimeout for immediate redirection
+      if (typeof window !== "undefined") {
+          localStorage.setItem("isAdminAuthenticated", "true");
+      }
+      toast({ title: "Login Successful", description: "Redirecting to admin panel..." });
+      router.replace("/admin");
+      // setIsLoading(false) // Not strictly necessary as component unmounts
     } else {
       setError("Invalid username or password.");
       toast({ title: "Login Failed", description: "Invalid username or password.", variant: "destructive" });
