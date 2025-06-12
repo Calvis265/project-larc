@@ -41,27 +41,24 @@ export default function AdminLoginPage() {
     setError("");
     setIsLoading(true);
 
-    // For debugging: Log the entered values and expected values
     console.log("Attempting login with:");
     console.log("Entered Username:", `"${username}"`);
     console.log("Expected Username:", `"${ADMIN_USERNAME}"`);
     console.log("Entered Password:", `"${password}"`);
     console.log("Expected Password:", `"${ADMIN_PASSWORD}"`);
 
-    // Simulate network delay
-    setTimeout(() => {
-      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        if (typeof window !== "undefined") {
-            localStorage.setItem("isAdminAuthenticated", "true");
-        }
-        toast({ title: "Login Successful", description: "Redirecting to admin panel..." });
-        router.push("/admin");
-      } else {
-        setError("Invalid username or password.");
-        toast({ title: "Login Failed", description: "Invalid username or password.", variant: "destructive" });
-        setIsLoading(false);
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+      if (typeof window !== "undefined") {
+          localStorage.setItem("isAdminAuthenticated", "true");
       }
-    }, 500);
+      toast({ title: "Login Successful", description: "Redirecting to admin panel..." });
+      router.push("/admin");
+      // No need to setIsLoading(false) here as we are redirecting
+    } else {
+      setError("Invalid username or password.");
+      toast({ title: "Login Failed", description: "Invalid username or password.", variant: "destructive" });
+      setIsLoading(false);
+    }
   };
 
   if (isCheckingAuth) {
