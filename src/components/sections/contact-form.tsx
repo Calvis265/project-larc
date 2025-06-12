@@ -8,24 +8,55 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
 
 export const ContactFormSection: FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to a backend
-    console.log({ name, email, message });
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
-    setName("");
-    setEmail("");
-    setMessage("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for contacting us. We'll get back to you soon.",
+        });
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        toast({
+          title: "Error Sending Message",
+          description: result.message || "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Contact form submission error:", error);
+      toast({
+        title: "Error",
+        description: "Could not send message. Please check your connection and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -47,6 +78,7 @@ export const ContactFormSection: FC = () => {
                   placeholder="Enter your name"
                   required
                   className="mt-1"
+                  disabled={isLoading}
                 />
               </div>
               <div>
@@ -59,6 +91,7 @@ export const ContactFormSection: FC = () => {
                   placeholder="Enter your email address"
                   required
                   className="mt-1"
+                  disabled={isLoading}
                 />
               </div>
               <div>
@@ -70,10 +103,15 @@ export const ContactFormSection: FC = () => {
                   placeholder="Type your message here..."
                   required
                   className="mt-1 min-h-[120px]"
+                  disabled={isLoading}
                 />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-headline text-lg py-3">
-                Submit
+              <Button 
+                type="submit" 
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-headline text-lg py-3"
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Submit"}
               </Button>
             </form>
           </CardContent>
