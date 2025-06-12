@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Menu, ShieldCheck } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -35,7 +35,6 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
     { label: "Portfolio", href: "#portfolio" },
     { label: "Team", href: "#team" },
     { label: "Contact", href: "#contact" },
-    { label: "Admin Panel", href: "/admin", icon: <ShieldCheck size={16} /> },
   ];
 
   const handleNavLinkClick = () => {
@@ -47,7 +46,7 @@ export const Header: FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
       <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
         <Link href="/" passHref>
           <div className="flex items-center space-x-2 cursor-pointer">
-            <Image src="https://placehold.co/100x40.png" alt="Larchcode Logo" width={100} height={40} data-ai-hint="logo abstract" />
+            <Image src="https://placehold.co/100x40.png" alt="Larchcode Logo" width={100} height={40} />
             <h1 className="text-2xl font-bold font-headline">Larchcode Hub</h1>
           </div>
         </Link>
