@@ -16,7 +16,7 @@ import {
   SidebarFooter,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { Home, Users, Settings, Building2, ListChecks, Image as ImageIcon, LogOut, Loader2 } from "lucide-react";
+import { Home, Users, Settings, Building2, ListChecks, Image as ImageIcon, LogOut, Loader2, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
@@ -27,58 +27,66 @@ interface AdminLayoutProps {
 const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("isAdminAuthenticated") === "true";
+    }
+    return false; // Default for SSR or if window not available yet
+  });
+  const [initialAuthChecked, setInitialAuthChecked] = useState(false);
+
 
   useEffect(() => {
+    // This effect ensures we re-check auth status after mount
+    // and sets initialAuthChecked to true to remove the main loader.
     if (typeof window !== "undefined") {
-      const adminAuth = localStorage.getItem("isAdminAuthenticated");
-      if (adminAuth === "true") {
-        setIsAuthenticated(true);
-      }
-      setIsLoading(false);
-    } else {
-        setIsLoading(false); 
+      const adminAuth = localStorage.getItem("isAdminAuthenticated") === "true";
+      setIsAuthenticated(adminAuth);
     }
+    setInitialAuthChecked(true);
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && !isLoading) {
+    // Auth guard: Redirects based on authentication status once initial check is complete.
+    if (initialAuthChecked && typeof window !== "undefined") {
       if (!isAuthenticated && pathname !== "/admin/login") {
         router.replace("/admin/login");
       } else if (isAuthenticated && pathname === "/admin/login") {
+        // If authenticated and somehow on login page, redirect to admin dashboard
         router.replace("/admin");
       }
     }
-  }, [isLoading, isAuthenticated, pathname, router]);
+  }, [initialAuthChecked, isAuthenticated, pathname, router]);
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("isAdminAuthenticated");
     }
-    setIsAuthenticated(false);
-    router.push("/admin/login");
+    setIsAuthenticated(false); // Update state immediately
+    router.push("/admin/login"); // Redirect to login
   };
 
-  if (isLoading) {
+  if (!initialAuthChecked) {
+    // Show a loader until the initial authentication check is complete
     return (
       <div className="flex h-screen items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <p className="ml-2 text-muted-foreground">Loading Admin Area...</p>
+        <p className="ml-2 text-muted-foreground">Initializing Admin Area...</p>
       </div>
     );
   }
 
   if (pathname === "/admin/login") {
     // For the login page, render children directly without the admin layout
-    // This check combined with the useEffect ensures that if not authenticated,
-    // other admin pages won't render this layout but will be redirected.
+    // This check, combined with the useEffect guard, handles rendering the login page.
     return <>{children}</>;
   }
   
   if (!isAuthenticated) {
-    // This state should ideally be brief as the useEffect will redirect.
-    // Or, if somehow the redirect hasn't fired, this prevents rendering protected content.
+    // This state should ideally be brief as the useEffect guard will redirect.
+    // Or, if the redirect hasn't fired, this prevents rendering protected content.
+    // It can also be a brief state if initialAuthChecked is true but isAuthenticated is false.
     return (
          <div className="flex h-screen items-center justify-center bg-background">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -87,7 +95,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
     );
   }
 
-  // If authenticated and not on the login page, render the full admin layout
+  // If initial check is done and user is authenticated (and not on login page), render the full admin layout
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
@@ -158,10 +166,12 @@ const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
           <SidebarTrigger className="md:hidden" />
           <h1 className="text-xl font-semibold text-foreground">
             {pathname === '/admin' ? 'Admin Dashboard' : 
-             pathname.startsWith('/admin/') ? pathname.split('/admin/')[1].charAt(0).toUpperCase() + pathname.split('/admin/')[1].slice(1).replace('-', ' ') + " Management" :
+             pathname.startsWith('/admin/') ? 
+               (pathname.split('/admin/')[1].charAt(0).toUpperCase() + pathname.split('/admin/')[1].slice(1).replace(/-/g, ' ') + " Management")
+               .replace(/\b(Login|login)\b Management/, "Login") // Avoid "Login Management"
+             :
              'Admin Area'}
           </h1>
-          {/* Placeholder for user profile / logout */}
         </header>
         <main className="flex-1 p-6 bg-muted/40">
           {children}
