@@ -8,7 +8,7 @@ const teamMembers = [
     name: "Loice Mugwe",
     title: "CEO Larchcode",
     description: "Experienced Finance & Operations Leader | Accredited Mediator | Strategic Management & Entrepreneurship Enthusiast | Stakeholder Engagement | Currently Improving Spanish Skills at UPV Valencia, Spain",
-    imageSrc: "https://placehold.co/150x150.png",
+    imageSrc: "/loice.png",
     stars: "🌟🌟🌟🌟",
     aiHint: "female leader"
   },
@@ -16,7 +16,7 @@ const teamMembers = [
     name: "Calvis Onyango",
     title: "Head of Support",
     description: "Experienced Full stack Software Engineer | Currently Improving Tech Skills at Moringa school, Kenya",
-    imageSrc: "https://placehold.co/150x150.png",
+    imageSrc: "/calvis.jpg",
     stars: "🌟🌟🌟🌟",
     aiHint: "male support"
   },
@@ -24,7 +24,7 @@ const teamMembers = [
     name: "Merceline Onyango",
     title: "Engineer",
     description: "Experienced Civil Engineer | Strategic Management & Entrepreneurship Enthusiast | Currently Improving Construction Skills at Machakos University, Kenya",
-    imageSrc: "https://placehold.co/150x150.png",
+    imageSrc: "/mercy.png",
     stars: "🌟🌟🌟🌟",
     aiHint: "female engineer"
   },
@@ -32,7 +32,7 @@ const teamMembers = [
     name: "Michelle Troksa",
     title: "Program Manager",
     description: "Experienced Communications Program Manager | Strategic Management & Entrepreneurship Enthusiast | Stakeholder Engagement | Currently working at ,United States",
-    imageSrc: "https://placehold.co/150x150.png",
+    imageSrc: "/troksa.png",
     stars: "🌟🌟🌟🌟",
     aiHint: "female manager"
   },

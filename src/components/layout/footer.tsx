@@ -70,7 +70,7 @@ export const Footer: FC = () => {
               <li>
                 <div className="flex items-center space-x-3 text-sm text-primary-foreground/80">
                   <MapPin size={18} />
-                  <span>Nairobi, Kenya (Placeholder)</span>
+                  <span>Nairobi, Kenya</span>
                 </div>
               </li>
             </ul>

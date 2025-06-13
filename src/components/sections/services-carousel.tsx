@@ -23,12 +23,12 @@ interface Service {
 const LOCAL_STORAGE_KEY = "larchcodeHubServices";
 
 const initialServiceImages: Service[] = [
-  { id: "1", src: "https://placehold.co/1200x600.png", alt: "Professional Cabro Installation" },
-  { id: "2", src: "https://placehold.co/1200x600.png", alt: "Creative Landscape Design" },
-  { id: "3", src: "https://placehold.co/1200x600.png", alt: "Ground Tilling and Preparation" },
-  { id: "4", src: "https://placehold.co/1200x600.png", alt: "Site Clearing and Levelling" },
-  { id: "5", src: "https://placehold.co/1200x600.png", alt: "Grass Planting and Seeding" },
-  { id: "6", src: "https://placehold.co/1200x600.png", alt: "Ongoing Landscape Maintenance" },
+  { id: "1", src: "/instal.png", alt: "Professional Cabro Installation" },
+  { id: "2", src: "/land.png", alt: "Creative Landscape Design" },
+  { id: "3", src: "/tiling.png", alt: "Ground Tilling and Preparation" },
+  { id: "4", src: "/clearing.png", alt: "Site Clearing and Levelling" },
+  { id: "5", src: "/grass.png", alt: "Grass Planting and Seeding" },
+  { id: "6", src: "/maintanance.png", alt: "Ongoing Landscape Maintenance" },
 ];
 
 export const ServicesCarousel: FC = () => {
